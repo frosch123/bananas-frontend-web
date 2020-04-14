@@ -1,15 +1,13 @@
-from webclient.main import app, template, protected, api_get
+from webclient.main import app, template, protected
 
 
 @app.route("/package/<content_type>")
 def package_list(content_type):
-    packages = api_get(("package", content_type))
-
-    for p in packages:
-        p["latest"] = max(p.get("versions", []), default=None, key=lambda v: v.get("upload-date", ""))
-
-    packages.sort(key=lambda p: p.get("name", ""))
-    packages.sort(reverse=True, key=lambda p: p["latest"].get("upload-date", "") if p["latest"] else "")
+    packages = [
+        {"content-type": content_type, "unique-id": "aabbccdd", "name": "Another banana content daemon", "url": "",
+         "latest": {"version": "0.1", "upload-date": "2020-02-29T11:11:11", "license": "custom", "download-url": "https://openttd.org", "filesize": "123456"}},
+        {"content-type": content_type, "unique-id": "ff117755", "name": "Finnish industrial replacement syndicate", "url": "https://opentt\">d.org", "latest": None},
+    ]
 
     return template("package_list.html", content_type=content_type, packages=packages)
 
@@ -17,17 +15,16 @@ def package_list(content_type):
 @app.route("/manager")
 @protected
 def manager_package_list(session):
-    packages = api_get(("package", "self"), session=session)
-
-    for p in packages:
-        versions = p.setdefault("versions", [])
-        newgame = [v for v in versions if v.get("availability", "") == "new-games"]
-        p["num-all"] = len(versions)
-        p["num-newgame"] = len(newgame)
-        p["latest-all"] = max(versions, default=None, key=lambda v: v.get("upload-date", ""))
-        p["latest-newgame"] = max(newgame, default=None, key=lambda v: v.get("upload-date", ""))
-
-    packages.sort(key=lambda p: p.get("name", ""))
-    packages.sort(reverse=True, key=lambda p: p["latest-all"].get("upload-date", "") if p["latest-all"] else "")
+    packages = [
+        {"content-type": "NewGRF", "unique-id": "aabbccdd", "name": "Another banana content daemon", "url": "",
+         "num-all": 12, "num-newgame": 1,
+         "latest-all": {"version": "0.1", "upload-date": "2020-02-29T11:11:11", "license": "custom", "download-url": "https://openttd.org", "filesize": "123456"},
+         "latest-newgame": {"version": "0.1", "upload-date": "2020-02-29T11:11:11", "license": "custom", "download-url": "https://openttd.org", "filesize": "123456"}},
+        {"content-type": "NewGRF", "unique-id": "ff117755", "name": "Finnish industrial replacement syndicate", "url": "https://opentt\">d.org",
+         "num-all": 31, "num-newgame": 0,
+         "latest-all": {"version": "3.5", "upload-date": "2010-02-29T11:11:11", "license": "custom", "download-url": "https://openttd.org", "filesize": "123456"},
+         "latest-newgame": None
+         },
+    ]
 
     return template("manager_package_list.html", session=session, packages=packages)

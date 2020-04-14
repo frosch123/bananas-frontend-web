@@ -1,12 +1,6 @@
 import datetime
 import secrets
 import flask
-import urllib
-import requests
-
-_api_url = "http://localhost:8080"  # TODO environment or something
-_frontend_url = "https://localhost:5000"  # TODO
-auth_backend = {"method": "developer", "username": "frosch"}
 
 _sessions = dict()
 SESSION_COOKIE = "bananas_sid"
@@ -101,13 +95,7 @@ def stop_session():
 def protected(fun):
     def wrapper(*args, **kwargs):
         session = get_session()
-        if session and session.api_token:
-            if not session.is_auth:
-                user, error = api_get(("user", ), session=session, return_errors=True)
-                if error is None:
-                    session.is_auth = True
-                    session.display_name = user.get("display-name", "")
-
+        if session:
             if session.is_auth:
                 return fun(session, *args, **kwargs)
 
@@ -126,75 +114,9 @@ def template(*args, **kwargs):
     return response
 
 
-def external_url_for(*args, **kwargs):
-    return _frontend_url + flask.url_for(*args, **kwargs)
-
-
 def redirect(*args, **kwargs):
     return flask.redirect(flask.url_for(*args, **kwargs))
 
 
 def not_found():
     flask.abort(404)
-
-
-def api_error():
-    flask.abort(500)
-
-
-def api_call(method, path, params=None, json=None, session=None, return_errors=False):
-    url = _api_url + "/" + "/".join(urllib.parse.quote(p, safe='') for p in path)
-    headers = None
-    if session and session.api_token:
-        headers = {"Authorization": "Bearer " + session.api_token}
-    try:
-        app.logger.info("API request to '{}': {}".format(url, json))
-        r = method(url, params=params, headers=headers, json=json)
-
-        success = r.status_code in (200, 201, 204)
-        if not success:
-            app.logger.warning("API failed: {}".format(r.text))
-
-        if success:
-            result = None
-            try:
-                result = r.json()
-            except Exception:
-                result = None
-            if return_errors:
-                return (result, None)
-            else:
-                return result
-        elif return_errors:
-            error = str(r.json().get("errors", "API call failed"))
-            return (None, error)
-        elif r.status_code == 404:
-            not_found()
-        elif r.status_code == 401:
-            if session and session.is_auth:
-                redirect("root", message="Access denied")
-            else:
-                redirect("login")
-    except Exception:
-        pass
-
-    if return_errors:
-        return (None, "API call failed")
-    else:
-        api_error()
-
-
-def api_get(*args, **kwargs):
-    return api_call(requests.get, *args, **kwargs)
-
-
-def api_post(*args, **kwargs):
-    return api_call(requests.post, *args, **kwargs)
-
-
-def api_put(*args, **kwargs):
-    return api_call(requests.put, *args, **kwargs)
-
-
-def api_delete(*args, **kwargs):
-    return api_call(requests.delete, *args, **kwargs)
