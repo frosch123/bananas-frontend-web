@@ -156,6 +156,7 @@ def manager_version_edit(session, content_type, unique_id, upload_date):
         record_change(changes, version, "name", form.get("name").strip(), True)
         record_change(changes, version, "url", form.get("url").strip(), True)
         record_change(changes, version, "version", form.get("version").strip())
+        record_change(changes, version, "availability", form.get("availability").strip())
         record_change_compatibility(changes, version, form)
         if not record_change_dependencies(changes, version, form, messages):
             valid_data = False
@@ -209,6 +210,7 @@ def manager_new_package_upload(session, token):
         record_change(changes, version, "version", form.get("version").strip())
         if form.get("license", "empty") != "empty":
             record_change(changes, version, "license", form.get("license").strip())
+        record_change(changes, version, "availability", form.get("availability").strip())
         record_change_compatibility(changes, version, form)
         if not record_change_dependencies(changes, version, form, messages):
             valid_data = False

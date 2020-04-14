@@ -24,13 +24,44 @@ def package_info(content_type, unique_id):
     return template("package_info.html", package=package)
 
 
-@app.route("/manager/<content_type>/<unique_id>")
+@app.route("/manager/<content_type>/<unique_id>", methods=['GET', 'POST'])
 @protected
 def manager_package_info(session, content_type, unique_id):
+    csrf_context = ("manager_package_info", content_type, unique_id)
     package = api_get(("package", content_type, unique_id), session=session)
+    messages = []
+
+    if flask.request.method == 'POST':
+        form = flask.request.form
+        valid_csrf = session.validate_csrf_token(form.get("csrf_token"), csrf_context)
+
+        any_changes = False
+        success = True
+        for v in package.get("versions", []):
+            key = v.get("upload-date")
+            if key:
+                changes = dict()
+                record_change(changes, v, "availability", form.get("availability_" + key))
+                v.update(changes)
+
+                if len(changes) > 0 and valid_csrf:
+                    any_changes = True
+                    _, error = api_put(("package", content_type, unique_id, key),
+                                       json=changes, session=session, return_errors=True)
+                    if error:
+                        messages.append(error)
+                        success = False
+
+        if not valid_csrf:
+            messages.append("CSRF token expired. Please reconfirm your changes.")
+        elif any_changes and success:
+            messages.append("Data updated")
+
     package.setdefault("versions", []).sort(reverse=True, key=lambda v: v.get("upload-date", ""))
 
-    return template("manager_package_info.html", session=session, package=package)
+    csrf_token = session.create_csrf_token(csrf_context)
+    return template("manager_package_info.html", session=session, package=package,
+                    messages=messages, csrf_token=csrf_token)
 
 
 @app.route("/manager/<content_type>/<unique_id>/edit", methods=['GET', 'POST'])
