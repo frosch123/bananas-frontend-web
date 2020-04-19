@@ -190,10 +190,22 @@ def manager_new_package_upload(session, token):
         "errors": ["Universe stopped expanding."]
     }
 
+    version.setdefault("files", []).sort(key=lambda v: v.get("filename", ""))
+
     deps_editable = True
     compatibility = get_compatibility(version)
 
     csrf_token = session.create_csrf_token(csrf_context)
-    return template("manager_new_package.html", session=session, package=package, version=version,
-                    compatibility=compatibility, licenses=_licenses, accept_tos=accept_tos, deps_editable=deps_editable,
-                    csrf_token=csrf_token)
+    return template(
+        "manager_new_package.html",
+        session=session,
+        package=package,
+        version=version,
+        compatibility=compatibility,
+        licenses=_licenses,
+        accept_tos=accept_tos,
+        deps_editable=deps_editable,
+        tus_url="dummy",
+        upload_token="1122",
+        csrf_token=csrf_token,
+    )
