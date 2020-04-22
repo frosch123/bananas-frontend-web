@@ -47,7 +47,8 @@
 <header class="section-header">
 {% block header %}{% endblock %}
 </header>
-<main>
+<main class="section-item">
+<div class="content">
 {% if messages %}
 <ul id="system-notices">
     {% for message in messages %}
@@ -56,6 +57,7 @@
 </ul>
 {% endif %}
 {% block content %}{% endblock %}
+</div>
 </main>
 </div>
 </div>
