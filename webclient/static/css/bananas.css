@@ -1,0 +1,85 @@
+
+.manager-table {
+	font-size: 12px;
+	table-layout: fixed;
+	width: 738px;
+}
+
+.manager-table th {
+	text-align: left;
+	vertical-align: top;
+	width: 120px;
+}
+
+.manager-table td {
+	border-bottom: 1px solid #FFFFFF;
+	border-top: 1px solid #FFFFFF;
+	padding: 1px 3px 1px 3px;
+	text-align: left;
+}
+
+.depList {
+	margin-top: 0px;
+	margin-bottom: 0px;
+	padding-left: 20px;
+}
+
+#bananas-table {
+	font-size: 12px;
+	table-layout: fixed;
+	width: 738px;
+}
+
+#bananas-table th {
+	text-align: left;
+	text-decoration: underline;
+}
+
+#bananas-table td {
+	border-bottom: 1px solid #FFFFFF;
+	border-top: 1px solid #FFFFFF;
+	padding: 1px 3px 1px 3px;
+	text-align: left;
+	vertical-align: top;
+}
+
+#bananas-table .odd {
+	background-color: #EEEEEE;
+}
+#bananas-table .even {
+	background-color: #FFFFFF;
+}
+#bananas-table tr.odd:hover, #bananas-table tr.even:hover, #bananas-table tr.odd:hover td, #bananas-table tr.even:hover td {
+	background-color: #CCCCCC;
+	border-bottom: 1px dashed #000000;
+	border-top: 1px dashed #000000;
+}
+
+#bananas-table .name {
+	width: 250px;
+}
+#bananas-table .type {
+	width: 80px;
+}
+#bananas-table .version {
+	width: 80px;
+}
+#bananas-table .grf {
+	width: 70px;
+}
+#bananas-table .downloads {
+	width: 70px;
+}
+#bananas-table .date {
+	width: 70px;
+}
+#bananas-table .author {
+	width: 70px;
+}
+#bananas-table .deps {
+	width: 70px;
+}
+#bananas-table .license {
+	width: 100px;
+}
+
