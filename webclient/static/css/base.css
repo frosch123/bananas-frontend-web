@@ -55,7 +55,7 @@ h5, .h5 {
 	background: url("/static/img/languages-bg.png") repeat-x;
 	height: 22px;
 	margin: 0px auto;
-	width: 800px;
+	width: 940px;
 }
 #languages a {
 	color: #CCCCCC;
@@ -89,7 +89,7 @@ h5, .h5 {
 	background: url("/static/img/header-bg.png") repeat;
 	height: 90px;
 	margin: 0px auto;
-	width: 800px;
+	width: 940px;
 }
 #header-left {
 	background: url("/static/img/header-bg-left.png") repeat-y;
@@ -197,7 +197,7 @@ h5, .h5 {
 	margin: 0px auto;
 	min-height: 32px;
 	overflow: hidden;
-	width: 800px;
+	width: 940px;
 }
 #navigation-left {
 	background: url("/static/img/navigation-bg-left.png") no-repeat;
@@ -225,7 +225,7 @@ h5, .h5 {
 #navigation-bar li a {
 	color: #DDDDDD;
 	display: block;
-	padding: 0px 14px 0px 14px;
+	padding: 0px 7px 0px 7px;
 	text-decoration: none;
 }
 #navigation-bar li a:hover {
@@ -242,11 +242,11 @@ h5, .h5 {
 #content-main {
 	background-color: white;
 	margin: 7px auto;
-	width: 800px;
+	width: 940px;
 }
 #content-top {
 	background: url("/static/img/content-bg-top.png") repeat-x;
-	width: 800px;
+	width: 940px;
 }
 #content-top-left {
 	background: url("/static/img/content-bg-top-left.png") no-repeat;
@@ -270,7 +270,7 @@ h5, .h5 {
 #content-bottom {
 	background: url("/static/img/content-bg-bottom.png") repeat-x;
 	height: 40px;
-	width: 800px;
+	width: 940px;
 }
 #content-bottom-left {
 	background: url("/static/img/content-bg-bottom-left.png") no-repeat;
@@ -303,7 +303,7 @@ h5, .h5 {
 	background: url("/static/img/footer-bg.png") repeat-x;
 	height: 95px;
 	margin: 5px auto;
-	width: 800px;
+	width: 940px;
 }
 #footer-left {
 	background: url("/static/img/footer-bg-left.png") no-repeat;
