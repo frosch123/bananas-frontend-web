@@ -42,7 +42,9 @@
         </li>
     </ul>
 </nav>
-<header>
+<div id="content-main">
+<div id="section-full">
+<header class="section-header">
 {% block header %}{% endblock %}
 </header>
 <main>
@@ -55,6 +57,8 @@
 {% endif %}
 {% block content %}{% endblock %}
 </main>
+</div>
+</div>
 <footer>
     <div id="content-bottom-links">
         <a href="https://www.openttd.org/policy.html">Privacy Policy</a> |
