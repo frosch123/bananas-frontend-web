@@ -50,12 +50,8 @@
 .section-item .content {
 	border-top: 1px solid #EEEEEE;
 	font-size: 14px;
-	padding: 5px 15px 30px 15px;
-	text-align: justify;
-}
-
-.section-item hr {
-	width: 100%;
+	padding-top: 15px;
+	padding-bottom: 30px;
 }
 
 .section-list {
