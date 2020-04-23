@@ -108,6 +108,7 @@ def protected(fun):
 def template(*args, **kwargs):
     if 'message' in kwargs:
         kwargs.setdefault('messages', []).append(kwargs['message'])
+    kwargs["copyyear"] = datetime.datetime.utcnow().year
 
     response = flask.make_response(flask.render_template(*args, **kwargs))
     response.headers['Content-Security-Policy'] = "default-src 'self'"
