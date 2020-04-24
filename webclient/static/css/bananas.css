@@ -122,3 +122,17 @@
 .package-edit-table .author-list li {
     list-style-type: none;
 }
+
+.package-upload-table th {
+    width: 150px;
+    vertical-align: top;
+    padding-top: 7px;
+    padding-bottom: 7px;
+}
+.package-upload-table .author-list {
+    margin: 0;
+    padding: 0;
+}
+.package-upload-table .author-list li {
+    list-style-type: none;
+}
